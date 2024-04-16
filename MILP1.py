@@ -10,12 +10,12 @@ try:
         records = line.strip().split(";")
         if records[0]=="B":
             # Batch capacity
-            B = int(records[1])
+            B = float(records[1])
         elif records[0]=="J":
             # Processing time of job
-            p.append(int(records[1]))
+            p.append(float(records[1]))
             # Size of job
-            s.append(int(records[2]))
+            s.append(float(records[2]))
         line = file.readline()
     file.close()
 except IOError:
