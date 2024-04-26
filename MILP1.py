@@ -63,7 +63,7 @@ for k in range(n):
     if len(selected)>0:
         print("\nSelected jobs for batch:")
         for i in selected:
-            print("job %d with processing time %.2f and size %.2f" %(i+1, p[i], s[i]))
+            print("job with processing time %.2f and size %.2f" %(p[i], s[i]))
 
 
 
