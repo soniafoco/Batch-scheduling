@@ -1,28 +1,33 @@
 from mip import Model, xsum, minimize, BINARY
+from operator import itemgetter
 
 # Reading file
 try:
     file = open("input.txt", "r", encoding="utf-8")
     line = file.readline()
-    p = []
-    s = []
+    jobs = []
     while line != "":
         records = line.strip().split(";")
         if records[0]=="B":
             # Batch capacity
             B = float(records[1])
         elif records[0]=="J":
-            # Processing time of job
-            p.append(float(records[1]))
-            # Size of job
-            s.append(float(records[2]))
+            # Tuple (processing time of job, size of job)
+            jobs.append( (float(records[1]), float(records[2])) )
         line = file.readline()
     file.close()
 except IOError:
     print("Could not read file")
 
-# Sorting processing times in descending order
-p.sort(reverse=True)
+# Sorting jobs in descending order of processing time
+jobs_sorted = sorted(jobs, key=itemgetter(0), reverse=True)
+
+# List of processing times
+p = [job[0] for job in jobs_sorted]
+
+# List of sizes
+s = [job[1] for job in jobs_sorted]
+
 
 # Number of jobs
 n = len(s)
@@ -30,8 +35,8 @@ n = len(s)
 # Model
 m = Model("MILP2")
 
-# Binary variables x(k)(k)
-x = [[m.add_var('x({})({})'.format(j , k), var_type=BINARY) for j in range(n)] for k in range(n)] 
+# Binary variables x(j)(k) 
+x = [[m.add_var('x({})({})'.format(j , k), var_type=BINARY) for k in range(j+1)] for j in range(n)] 
 
 # Objective function
 m.objective = minimize(xsum(p[k]*x[k][k] for k in range(n)))
@@ -44,7 +49,7 @@ for k in range(n-1):
     m.add_constr(xsum(s[j]*x[j][k] for j in range(k+1,n)) <= (B-s[k])*x[k][k] )
 
 for j in range(n):
-    for k in range(n):
+    for k in range(j+1):
         m.add_constr(x[j][k] <= x[k][k])
 
 # Optimization
@@ -58,7 +63,7 @@ print("\n\nOptimal solution: %f" %m.objective_value)
 for k in range(n):
     selected = []
     for j in range(n):
-        if x[j][k].x >= 0.99:
+        if j>=k and x[j][k].x >= 0.99:
             selected.append(j)
     if len(selected)>0:
         print("\nSelected jobs for batch:")
