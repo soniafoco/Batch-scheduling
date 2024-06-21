@@ -2,11 +2,9 @@
 
 ### Descrizione
 Il problema di batch scheduling ha l'obiettivo di minimizzare il massimo tempo di completamento di un insieme di job, caratterizzati da uno specifico tempo di 
-lavorazione p~j ed una dimensione s~j. I job vengono raggruppati in batch e processati simultaneamente su una macchina con capacità limitata pari a B.
+lavorazione p<sub>j</sub> ed una dimensione s<sub>j</sub>. I job vengono raggruppati in batch e processati simultaneamente su una macchina con capacità limitata pari a B.
 
-Questa repository contiene l'implementazione in codice Python dei modelli di programmazione lineare misto intera (MILP~1, MILP~2) e degli algoritmi euristici (Greedy~1, Greedy~2 e Knapsack) 
-per la risoluzione del problema di batch scheduling. I modelli e gli algoritmi sono stati testati su 180 istanze diverse generate attraverso uno script Python.Le istanze utilizzate per i test e 
-i risultati dei test si trovano rispettivamente nelle cartelle 'istanze_test' e 'output_test'.
+Questa repository contiene l'implementazione in codice Python dei modelli di programmazione lineare misto intera (MILP<sub>1</sub>, MILP<sub>1</sub>) e degli algoritmi euristici (Greedy<sub>1</sub>, Greedy<sub>2</sub> e Knapsack) per la risoluzione del problema di batch scheduling. I modelli e gli algoritmi sono stati testati su 180 istanze diverse generate attraverso uno script Python.Le istanze utilizzate per i test e i risultati dei test si trovano rispettivamente nelle cartelle 'istanze_test' e 'output_test'.
 
 ### Istruzioni
 Per testare i modelli e gli algoritmi proposti, in primo luogo è necessario generare le istanze eseguendo lo script 'write_istanze.py' ed installare la libreria Python MIP utilizzata per l'implementazione dei modelli.
